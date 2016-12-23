@@ -1,7 +1,10 @@
 package org.haha.com;
 
+import com.google.common.collect.Lists;
+import com.vaadin.annotations.Theme;
 import com.vaadin.annotations.VaadinServletConfiguration;
 import com.vaadin.annotations.Widgetset;
+import com.vaadin.data.util.IndexedContainer;
 import com.vaadin.server.FontAwesome;
 import com.vaadin.server.VaadinRequest;
 import com.vaadin.server.VaadinServlet;
@@ -10,10 +13,13 @@ import com.vaadin.ui.Label;
 import com.vaadin.ui.TextField;
 import com.vaadin.ui.UI;
 import com.vaadin.ui.VerticalLayout;
+import org.vaadin.tokenfield.TokenField;
 
 import javax.servlet.annotation.WebServlet;
+import java.util.List;
 
 @Widgetset("AppWidgetset")
+@Theme("valo")
 public class SampleUI extends UI {
 
     @Override
@@ -32,11 +38,21 @@ public class SampleUI extends UI {
             }
         });
 
-        layout.addComponents(name, button);
+        TokenField tokenField = new TokenField("", TokenField.InsertPosition.AFTER);
+        tokenField.setContainerDataSource(new IndexedContainer(options()));
+        layout.addComponents(name, button, tokenField);
         layout.setMargin(true);
         layout.setSpacing(true);
 
         setContent(layout);
+    }
+
+    private List<String> options() {
+        List<String> result = Lists.newArrayList();
+        for(int i  = 0; i< 100; i++){
+            result.add(Integer.toString(i) + Integer.toString(i) + Integer.toString(i));
+        }
+        return result;
     }
 
     @WebServlet(urlPatterns = "/*", name = "MyUIServlet", asyncSupported = true)

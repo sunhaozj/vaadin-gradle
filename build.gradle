@@ -28,6 +28,7 @@ vaadin {
 }
 
 dependencies {
+    compile 'org.vaadin.addons:tokenfield:7.0.1'
     compile "org.vaadin.addons:graph-explorer:0.7.2"
     testCompile group: 'junit', name: 'junit', version: '4.11'
 }
