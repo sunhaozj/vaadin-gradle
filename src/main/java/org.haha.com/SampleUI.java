@@ -41,6 +41,7 @@ public class SampleUI extends UI {
         TokenField tokenField = new TokenField("", TokenField.InsertPosition.AFTER);
         tokenField.setContainerDataSource(new IndexedContainer(options()));
         layout.addComponents(name, button, tokenField);
+//        layout.addComponents(name, button);
         layout.setMargin(true);
         layout.setSpacing(true);
 
