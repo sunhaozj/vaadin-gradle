@@ -9,11 +9,14 @@ import com.vaadin.server.FontAwesome;
 import com.vaadin.server.VaadinRequest;
 import com.vaadin.server.VaadinServlet;
 import com.vaadin.ui.Button;
+import com.vaadin.ui.CssLayout;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.TextField;
 import com.vaadin.ui.UI;
-import com.vaadin.ui.VerticalLayout;
 import org.vaadin.tokenfield.TokenField;
+import org.vaadin.visjs.networkDiagram.NetworkDiagram;
+import org.vaadin.visjs.networkDiagram.Node;
+import org.vaadin.visjs.networkDiagram.options.Options;
 
 import javax.servlet.annotation.WebServlet;
 import java.util.List;
@@ -24,28 +27,35 @@ public class SampleUI extends UI {
 
     @Override
     protected void init(VaadinRequest vaadinRequest) {
-        final VerticalLayout layout = new VerticalLayout();
+        final CssLayout layout = new CssLayout();
 
         final TextField name = new TextField();
         name.setCaption("Type your name here:");
 
         Button button = new Button("Click Me", FontAwesome.ADJUST);
-        button.addClickListener(new Button.ClickListener() {
-            @Override
-            public void buttonClick(Button.ClickEvent e) {
-                layout.addComponent(new Label("Thanks " + name.getValue()
-                        + ", it works!"));
-            }
-        });
+//        button.addClickListener(new Button.ClickListener() {
+//            @Override
+//            public void buttonClick(Button.ClickEvent e) {
+//                layout.addComponent(new Label("Thanks " + name.getValue()
+//                        + ", it works!"));
+//            }
+//        });
+
 
         TokenField tokenField = new TokenField("", TokenField.InsertPosition.AFTER);
         tokenField.setContainerDataSource(new IndexedContainer(options()));
-        layout.addComponents(name, button, tokenField);
+
+        NetworkDiagram diagram  = new NetworkDiagram(new Options());
+        diagram.addNode(new Node("who1", "who"));
+        diagram.addNode(new Node("who2", "who"));
+        diagram.addNode(new Node("who3", "who"));
+        diagram.setSizeFull();
+        layout.addComponents(name, button, tokenField, diagram);
 //        layout.addComponents(name, button);
-        layout.setMargin(true);
-        layout.setSpacing(true);
+
 
         setContent(layout);
+        layout.setSizeFull();
     }
 
     private List<String> options() {
